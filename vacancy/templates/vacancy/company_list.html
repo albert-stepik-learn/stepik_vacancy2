@@ -1,0 +1,38 @@
+{% extends "vacancy/base.html" %}
+{% load static %}
+
+{% block title %}Компании | Джуманджи{% endblock %}
+
+{% block brand %}
+<a class="navbar-brand mr-4 font-weight-bold" href="#">Джуманджи</a>
+{% endblock %}
+
+{% block action %}
+<a href="#" class="nav-link font-weight-bold">Вход</a>
+{% endblock %}
+
+{% block main %}
+  <main class="container mt-3">
+    <section>
+      <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>Нам доверяют лучшие компании</strong></h1>
+      <p class="text-center pt-1">{{ object_list.count }} компаний</p>
+    </section>
+    <section class="my-5 pt-3">
+      <h2 class="h2 font-weight-normal text-center mb-5">Нам доверяют лучшие компании</h2>
+      <div class="row mb-0">
+      {% for company in object_list %}
+        <div class="col-6 col-md-6 col-lg-3">
+          <div class="card pt-4 text-center mb-4">
+            <a href="#" style="max-width: 150px;" class="mx-auto d-block">
+              <img class="mx-auto d-block mw-100" src="{% static 'vacancy/'|add:company.logo %}" alt="">
+            </a>
+            <div class="card-body">
+              <p class="card-text"><a href="#">{{ company.vacancies.count }} вакансий</a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </section>
+  </main>
+{% endblock %}

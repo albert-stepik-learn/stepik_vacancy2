@@ -1,0 +1,40 @@
+{% extends "vacancy/base.html" %}
+
+{% block title %}Создать карточку компании | Джуманджи{% endblock %}
+{% block body-style %}
+<style>
+    body {
+      background-color: #F6F2E6;
+    }
+  </style>
+{% endblock %}
+
+{% block brand %}
+<a class="navbar-brand mr-4 font-weight-bold" href="#">Джуманджи</a>
+{% endblock %}
+
+{% block action %}
+<div class="btn-group">
+  <button type="button" class="btn dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Иван Топорыжкин
+  </button>
+  <div class="dropdown-menu dropdown-menu-right mt-3">
+    <a href="#" class="dropdown-item py-2">Профиль</a>
+    <a href="#" class="dropdown-item py-2">Резюме</a>
+    <a href="#" class="dropdown-item py-2">Компания</a>
+    <a href="#" class="dropdown-item py-2">Выйти</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block main %}
+  <main class="container mt-3 pb-5">
+    <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+      <div class="card-body px-3 pb-4">
+        <h1 class="h4 pt-2">Моя компания</h1>
+        <p class="mt-2">Пока мы думаем, что вы – частное лицо. Хотите создать карточку компании, разместить информаию и вакансии?</p>
+        <a href="#" class="btn btn-info mb-2">Создать карточку компании</a>
+      </div>
+    </section>
+  </main>
+{% endblock %}
