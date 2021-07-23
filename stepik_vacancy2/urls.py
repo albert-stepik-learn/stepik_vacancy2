@@ -15,10 +15,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
+from django.conf.urls.static import static
 
+from stepik_vacancy2 import settings
 from vacancy import views
-from vacancy.views import CompanyDetailView, CompanyListView, SpecialityDetailView, VacancyDetailView, VacancyListView
+from vacancy.views import CompanyDetailView, CompanyListView, SpecialityDetailView, VacancyDetailView, VacancyListView, \
+    ApplicationDetailView, lets_start_view, MyCompanyEditView, my_vacancies_view, \
+    MyVacancyDetail, MySignupView, MyLoginView, MyCompanyCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +33,16 @@ urlpatterns = [
     path('companies/<int:pk>/', CompanyDetailView.as_view(), name='company'),
     path('companies/', CompanyListView.as_view(), name='companies'),
     path('vacancies/cat/<str:code>/', SpecialityDetailView.as_view(), name='speciality'),
+    path('vacancies/<int:vacancy_id>/send/', ApplicationDetailView.as_view(), name='application'),
+    path('mycompany/letsstart/', lets_start_view, name='lets_start'),
+    path('mycompany/create/', MyCompanyCreateView.as_view(), name='company_create'),
+    path('mycompany/', MyCompanyEditView.as_view(), name='company_edit'),
+    path('mycompany/vacancies/', my_vacancies_view, name='my_vacancies'),
+    path('mycompany/vacancies/<int:vacancy_id>', MyVacancyDetail.as_view(), name='my_vacancy_details'),
+    path('login/', MyLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),   # settings.LOGOUT_REDIRECT_URL = '/login/'
+    path('signup/', MySignupView.as_view(), name='signup'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

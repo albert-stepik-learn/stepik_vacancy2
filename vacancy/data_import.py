@@ -2,29 +2,35 @@
 """
 import os
 
+
 import django
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'stepik_vacancy2.settings'
 django.setup()
 
-from vacancy.models import Vacancy, Company, Speciality
+from django.contrib.auth.models import User
+
+from vacancy.models import Vacancy, Company, Speciality, Application
 from vacancy import data
 
 
 for company_data in data.companies:
+    admin = User.objects.get(pk=1)
     Company.objects.create(
         id=company_data['id'],
         name=company_data['title'],
-        logo=company_data['logo'],
+        logo=f"vacancy/static/vacancy/{company_data['logo']}",
         employee_count=company_data['employee_count'],
         location=company_data['location'],
         description=company_data['description'],
+        owner=admin,
     )
 
 for speciality_data in data.specialties:
     Speciality.objects.create(
         code=speciality_data['code'],
         title=speciality_data['title'],
+        logo=f"vacancy/static/vacancy/specty_{speciality_data['code']}.png"
     )
 
 for vacancy_data in data.jobs:

@@ -1,0 +1,9 @@
+{% extends "vacancy/base.html" %}
+
+{% block main %}
+<h1>Sign up.</h1>
+<form method="post" action="">{% csrf_token %}
+  <table>{{ form.as_table }}</table>
+  <button type="submit">Send</button>
+</form>
+{% endblock %}

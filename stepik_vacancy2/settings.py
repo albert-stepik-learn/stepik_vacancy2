@@ -121,7 +121,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Images and other media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+MEDIA_COMPANY_IMAGE_DIR = 'company_images'
+MEDIA_SPECIALITY_IMAGE_DIR = 'speciality_images'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
