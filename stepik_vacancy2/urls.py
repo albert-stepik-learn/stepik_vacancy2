@@ -22,8 +22,8 @@ from django.conf.urls.static import static
 from stepik_vacancy2 import settings
 from vacancy import views
 from vacancy.views import CompanyDetailView, CompanyListView, SpecialityDetailView, VacancyDetailView, VacancyListView, \
-    ApplicationDetailView, lets_start_view, MyCompanyEditView, my_vacancies_view, \
-    MyVacancyDetail, MySignupView, MyLoginView, MyCompanyCreateView
+    ApplicationDetailView, lets_start_view, MyCompanyEditView, MyVacancyListView, MyVacancyDetailView, \
+    MyVacancyCreateView, MySignupView, MyLoginView, MyCompanyCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,11 +34,12 @@ urlpatterns = [
     path('companies/', CompanyListView.as_view(), name='companies'),
     path('vacancies/cat/<str:code>/', SpecialityDetailView.as_view(), name='speciality'),
     path('vacancies/<int:vacancy_id>/send/', ApplicationDetailView.as_view(), name='application'),
+    path('mycompany/', MyCompanyEditView.as_view(), name='company_edit'),
     path('mycompany/letsstart/', lets_start_view, name='lets_start'),
     path('mycompany/create/', MyCompanyCreateView.as_view(), name='company_create'),
-    path('mycompany/', MyCompanyEditView.as_view(), name='company_edit'),
-    path('mycompany/vacancies/', my_vacancies_view, name='my_vacancies'),
-    path('mycompany/vacancies/<int:vacancy_id>', MyVacancyDetail.as_view(), name='my_vacancy_details'),
+    path('mycompany/vacancies/', MyVacancyListView.as_view(), name='my_vacancies'),
+    path('mycompany/vacancies/<int:vacancy_id>', MyVacancyDetailView.as_view(), name='my_vacancy'),
+    path('mycompany/vacancies/create/', MyVacancyCreateView.as_view(), name='my_vacancy_create'),
     path('login/', MyLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),   # settings.LOGOUT_REDIRECT_URL = '/login/'
     path('signup/', MySignupView.as_view(), name='signup'),

@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 
-from .forms import CompanyForm
+from .forms import CompanyForm, VacancyForm
 from .models import Company, Speciality, Vacancy, Application
 
 
@@ -87,6 +87,7 @@ class MyCompanyCreateView(LoginRequiredMixin, CreateView):
 
 # View and edit a company:
 class MyCompanyEditView(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
 
     def get(self, request, *args):
         owner_id = request.user.id
@@ -95,7 +96,7 @@ class MyCompanyEditView(LoginRequiredMixin, DetailView):
             return redirect('/mycompany/letsstart/')
         else:
             form = CompanyForm(instance=company)
-            return render(request, 'vacancy/company-edit.html/', context={'form': form})
+            return render(request, 'vacancy/mycompany.html/', context={'form': form, 'company_name': company.name})
 
     def post(self, request):
         print(request.POST)
@@ -105,24 +106,48 @@ class MyCompanyEditView(LoginRequiredMixin, DetailView):
         if form.is_valid():
             form.save()
             return redirect('/mycompany/')
-        return render(request, 'vacancy/company-edit.html', context={'form': form})
+        return render(request, 'vacancy/company.html', context={'form': form, 'company_name': company.name})
 
 
-# Vacancies published for my company:
-def my_vacancies_view(request):
-    return render(request, 'vacancy/my_vacancies.html', context={})
+class MyVacancyCreateView(LoginRequiredMixin, CreateView):
+    def get(self, request, *args):
+        return render(request, 'vacancy/myvacancy-create.html', context={'form': VacancyForm})
+
+    def post(self, request, *args):
+        form = VacancyForm(request.POST)
+        company = get_object_or_404(Company, owner_id=request.user.id)
+        if form.is_valid():
+            vacancy = form.save(commit=False)
+            vacancy.company = company
+            vacancy.save()
+            return redirect('/mycompany/vacancies/')
+        return render(request, 'vacancy/myvacancy-create.html', context={'form': form})
 
 
-def my_vacancy_create(request):
-    return render(request, 'vacancy/vacancy-create.html', context={})
+class MyVacancyListView(ListView):
+
+    def get(self, request, *args):
+        owner_id = request.user.id
+        company = get_object_or_404(Company, owner_id=owner_id)
+        vacancies = Vacancy.objects.filter(company=company)
+        if vacancies.count() == 0:
+            return render(request, 'vacancy/myvacancies-empty.html')
+        return render(request, 'vacancy/myvacancies.html', context={'vacancies': vacancies})
 
 
-class MyVacancyCreateView(CreateView):
-    pass
+class MyVacancyDetailView(LoginRequiredMixin, DetailView):
+    def get(self, request, *args, **kwargs):
+        vacancy = get_object_or_404(Vacancy, pk=self.kwargs['vacancy_id'])
+        form = VacancyForm(instance=vacancy)
+        return render(request, 'vacancy/myvacancy.html', context={'form': form})
 
-class MyVacancyDetail(DetailView):
-    model = Vacancy
-    template = 'vacancy/vacancy_detail.html'
+    def post(self, request, *args, **kwargs):
+        vacancy = get_object_or_404(Vacancy, pk=self.kwargs['vacancy_id'])
+        form = VacancyForm(request.POST, instance=vacancy)
+        if form.is_valid():
+            form.save()
+            return redirect('/mycompany/vacancies/')
+        return render(request, 'vacancy/myvacancy.html', context={'form': form})
 
 
 class MySignupView(CreateView):

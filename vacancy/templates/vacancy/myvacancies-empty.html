@@ -1,0 +1,7 @@
+{% extends "vacancy/mycompany.html" %}
+
+{% block tab %}
+<h2 class="h4 pt-2">Вакансии</h2>
+<p class="mt-2">У вас пока нет вакансий, но вы можете создать первую!</p>
+<a href="{% url 'my_vacancy_create' %}" class="btn btn-info mb-2">Добавить вакансию</a>
+{% endblock %}

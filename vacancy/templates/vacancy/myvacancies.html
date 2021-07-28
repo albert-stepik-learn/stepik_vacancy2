@@ -1,0 +1,15 @@
+{% extends "vacancy/mycompany.html" %}
+
+{% block tab %}
+<section class="tab-pane fade show active">
+    <h2 class="h4 pt-2 pb-3">Вакансии</h2>
+    {% for vacancy in vacancies %}
+        <div class="col-12 col-md-8 col-lg-9">
+            <h2 class="h2 pb-2">{{ vacancy.title }}</h2>
+            <p>От {{ vacancy.salary_min }} до {{ vacancy.salary_max }} руб.</p>
+            <p class="text-muted pt-1">{{ title.published_at }}</p>
+            <a href="{% url 'my_vacancy' vacancy_id=vacancy.id %}" class="btn btn-info mb-2">Изменить</a>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

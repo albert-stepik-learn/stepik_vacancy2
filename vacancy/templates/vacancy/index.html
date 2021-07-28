@@ -3,14 +3,6 @@
 
 {% block title %} Джуманджи {% endblock %}
 
-{% block brand %}
-<a class="navbar-brand mr-4 font-weight-bold" href="#">Джуманджи</a>
-{% endblock %}
-
-{% block action %}
-<a href="{% url 'login' %}" class="nav-link font-weight-bold">Вход</a>
-{% endblock %}
-
 {% block main %}
   <main class="container mt-3">
     <section>
@@ -46,7 +38,7 @@
 <!--            <img class="mx-auto d-block" src="{% static 'vacancy/specty_'|add:speciality.code|add:'.png' %}" width="80" height="80" alt="">-->
             <div class="card-body">
               <p class="card-text mb-2">{{ speciality.title }}</p>
-              <p class="card-text"><a href="#">{{ speciality.vacancy_count }} вакансий</a></p>
+              <p class="card-text"><a href="{% url 'speciality' speciality.code %}">{{ speciality.vacancy_count }} вакансий</a></p>
             </div>
           </div>
         </div>
@@ -60,11 +52,12 @@
       {% for company in companies %}
         <div class="col-6 col-md-6 col-lg-3">
           <div class="card pt-4 text-center mb-4">
+            <p class="card-text mb-2">{{ company.name }}</p>
             <a href="#" style="max-width: 150px;" class="mx-auto d-block">
 <!--              <img class="mx-auto d-block mw-100" src="{% static 'vacancy/'|add:company.logo %}" alt="">-->
             </a>
             <div class="card-body">
-              <p class="card-text"><a href="#">{{ company.vacancy_count }} вакансий</a></p>
+              <p class="card-text"><a href="{% url 'company' company.pk %}">{{ company.vacancy_count }} вакансий</a></p>
             </div>
           </div>
         </div>
