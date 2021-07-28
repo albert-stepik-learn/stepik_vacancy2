@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 
-from .forms import CompanyForm, VacancyForm
+from .forms import CompanyForm, VacancyForm, MySignUpForm
 from .models import Company, Speciality, Vacancy, Application
 
 
@@ -151,14 +151,17 @@ class MyVacancyDetailView(LoginRequiredMixin, DetailView):
 
 
 class MySignupView(CreateView):
-    form_class = UserCreationForm
+    # form_class = UserCreationForm
+    form_class = MySignUpForm
     success_url = '/login/'
     template_name = 'vacancy/signup.html'
 
     def post(self, request, *args):
         User.objects.create_user(
             username=request.POST.get('username'),
-            password=request.POST.get('password1')
+            password=request.POST.get('password1'),
+            first_name=request.POST.get('first_name'),
+            last_name=request.POST.get('last_name'),
         )
         return redirect('/login/')
 
@@ -166,3 +169,5 @@ class MySignupView(CreateView):
 class MyLoginView(LoginView):
     success_url = '/'   # This parameter seems doesn't work. Instead, I'm using settings.LOGIN_REDIRECT_URL = '/'.
     template_name = 'vacancy/login.html'
+
+

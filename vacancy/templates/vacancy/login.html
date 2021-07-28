@@ -1,8 +1,11 @@
-{% extends "vacancy/base.html" %}
+{% extends "vacancy/mycompany.html" %}
 
 {% block main %}
+<p>Войдите, чтобы управлять</p>
 <h1>Log in.</h1>
 <form method="post" action="">{% csrf_token %}
   <table>{{ form.as_table }}</table>
-  <button type="submit">Login</button>
-</form>{% endblock %}
+  <button type="submit">Войти</button>
+</form>
+<p>Нет аккаунта? <a href="{% url 'signup' %}">Зарегистрируйтесь</a></p>
+{% endblock %}

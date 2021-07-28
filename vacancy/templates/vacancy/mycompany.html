@@ -12,7 +12,7 @@
 {% block action %}
 <div class="btn-group">
   <button type="button" class="btn dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    {{ request.user.username }}
+    {{ request.user.first_name }} {{ request.user.last_name }}
   </button>
   <div class="dropdown-menu dropdown-menu-right mt-3">
     <a href="#" class="dropdown-item py-2">Профиль</a>
