@@ -1,4 +1,4 @@
-{% extends "vacancy/base.html" %}
+{% extends "vacancy/mycompany.html" %}
 
 {% block title %}Создать карточку компании | Джуманджи{% endblock %}
 {% block body-style %}
@@ -8,22 +8,6 @@
     }
   </style>
 {% endblock %}
-
-{# COMMENTED
-{% block action %}
-<div class="btn-group">
-  <button type="button" class="btn dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Иван Топорыжкин
-  </button>
-  <div class="dropdown-menu dropdown-menu-right mt-3">
-    <a href="#" class="dropdown-item py-2">Профиль</a>
-    <a href="#" class="dropdown-item py-2">Резюме</a>
-    <a href="#" class="dropdown-item py-2">Компания</a>
-    <a href="#" class="dropdown-item py-2">Выйти</a>
-  </div>
-</div>
-{% endblock %}
-#}
 
 {% block main %}
   <main class="container mt-3 pb-5">

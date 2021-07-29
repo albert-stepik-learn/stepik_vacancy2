@@ -24,12 +24,13 @@
                   <h2 class="h2 pb-2">{{ vacancy.title }}</h2>
                   <p class="mb-2">{{ vacancy.skills }}</p>
                   <p>От {{ vacancy.salary_min }} до {{ vacancy.salary_max }} руб.</p>
-                  <p class="text-muted pt-1">9 декабря</p>
+                  <p class="text-muted pt-1">{{ vacancy.published_at }}</p>
                 </div>
                 <div class="col-12 col-md-4 col-lg-3 d-flex align-items-end">
                   <img src="{% static 'vacancy/specty_'|add:vacancy.speciality.code|add:'.png' %}" width="130" height="80" alt="">
                 </div>
               </div>
+              <a class="btn btn-info mb-2" href="{% url 'vacancy' vacancy.pk %}">Подробнее</a>
             </div>
           </div>
         {% endfor %}

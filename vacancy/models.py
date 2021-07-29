@@ -1,3 +1,5 @@
+from importlib._common import _
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
@@ -49,3 +51,62 @@ class Application(models.Model):
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, related_name="applications")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "applications")
+
+
+class Resume(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=120)
+    surname = models.CharField(max_length=120)
+
+    # class ReadyStatus(models.TextChoices):
+    #     NOTREADY = 'NR', _('Не ищу работу')
+    #     READYTOOFFER = 'RF', _('Рассматриваю предложения')
+    #     READYTOWORK = 'RW', _('Ищу работу')
+
+    NOTREADY = 'NR'
+    READYTOOFFER = 'RF'
+    READYTOWORK = 'RW'
+
+    READYNESS_STATUS_CHOICES = [
+        (NOTREADY, 'Не ищу работу'),
+        (READYTOOFFER, 'Рассматриваю предложения'),
+        (READYTOWORK, 'Ищу работу'),
+    ]
+
+    status = models.CharField(
+        max_length=2,
+        choices=READYNESS_STATUS_CHOICES,
+        default=NOTREADY,
+    )
+    salary = models.IntegerField()
+    speciality = models.CharField(max_length=120)
+
+    # class Grade(models.TextChoices):
+    #     INTERN = 'IN', _('Стажер')
+    #     JUNIOR = 'JN', _('Младший разработчик')
+    #     MIDDLE = 'MD', _('Разработчик')
+    #     LEED = 'LD', _('Ведущий разработчик')
+
+    INTERN = 'IN'
+    JUNIOR = 'JN'
+    MIDDLE = 'MD'
+    LEED = 'LD'
+
+    GRADE_CHOICES = [
+        (INTERN, 'Стажер'),
+        (JUNIOR, 'Младший разработчик'),
+        (MIDDLE, 'Разработчик'),
+        (LEED, 'Ведущий разработчик'),
+    ]
+
+    grade = models.CharField(
+        max_length=2,
+        choices=GRADE_CHOICES,
+        default=INTERN,
+    )
+    education = models.TextField()
+    experience = models.TextField()
+    portfolio = models.URLField(max_length=200)
+
+    def __str__(self):
+        print(self.name)
