@@ -2,13 +2,15 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
 
-from stepik_vacancy2.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
+from stepik_vacancy2.settings import MEDIA_COMPANY_IMAGE_DIR
+
 
 class Speciality(models.Model):
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=200)
     height_field = models.PositiveIntegerField(default=0)
     width_field = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return self.title
 
@@ -46,11 +48,11 @@ class Application(models.Model):
     written_phone = models.CharField(max_length=15)
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, related_name="applications")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "applications")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications")
 
 
 class Resume(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="resume", null=True)
     name = models.CharField(max_length=120)
     surname = models.CharField(max_length=120)
 

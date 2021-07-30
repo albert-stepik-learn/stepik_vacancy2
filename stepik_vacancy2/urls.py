@@ -21,10 +21,10 @@ from django.conf.urls.static import static
 
 from stepik_vacancy2 import settings
 from vacancy import views
-from vacancy.views import CompanyDetailView, CompanyListView, SpecialityDetailView, VacancyDetailView, VacancyListView, \
-    ApplicationCreateView, company_lets_start_view, MyCompanyEditView, MyVacancyListView, MyVacancyDetailView, \
-    MyVacancyCreateView, MySignupView, MyLoginView, MyCompanyCreateView, ResumeView, ResumeCreateView, \
-    resume_lets_start_view
+from vacancy.views import CompanyDetailView, CompanyListView, SpecialityDetailView, VacancyDetailView, \
+    VacancyListView, ApplicationCreateView, company_lets_start_view, MyCompanyEditView, MyVacancyListView, \
+    MyVacancyDetailView, MyVacancyCreateView, MySignupView, MyLoginView, MyCompanyCreateView, ResumeView, \
+    ResumeCreateView, resume_lets_start_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -37,7 +37,7 @@ class VacancyListView(ListView):
                 | Q(skills__contains=search)
                 | Q(description__contains=search)
                 | Q(speciality__title__contains=search)
-                | Q(speciality__code__contains=search)
+                | Q(speciality__code__contains=search),
             )
         return render(request, 'vacancy/vacancies.html', context={'vacancy_list': vacancies})
 
@@ -79,6 +79,8 @@ class CompanyDetailView(DetailView):
 
 # Apply for a vacation:
 class ApplicationCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+
     model = Application
 
     def get(self, request, *args, **kwargs):
@@ -99,11 +101,15 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView):
 
 # Propose a new company creation:
 def company_lets_start_view(request):
+    if request.user.company:
+        return redirect('/mycompany/')
     return render(request, 'vacancy/company-lets-start.html')
 
 
 # Create a company:
 class MyCompanyCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+
     def get(self, request, *args):
         return render(request, 'vacancy/company-create.html', context={'form': CompanyForm})
 
@@ -142,6 +148,8 @@ class MyCompanyEditView(LoginRequiredMixin, DetailView):
 
 
 class MyVacancyCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+
     def get(self, request, *args):
         return render(request, 'vacancy/myvacancy-create.html', context={'form': VacancyForm})
 
@@ -168,6 +176,8 @@ class MyVacancyListView(ListView):
 
 
 class MyVacancyDetailView(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+
     def get(self, request, *args, **kwargs):
         vacancy = get_object_or_404(Vacancy, pk=self.kwargs['vacancy_id'])
         form = VacancyForm(instance=vacancy)
@@ -212,8 +222,12 @@ def resume_lets_start_view(request):
     return render(request, 'vacancy/resume-lets-start.html')
 
 
-class ResumeCreateView(CreateView):
+class ResumeCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+
     def get(self, request, *args):
+        if request.user.resume:
+            return redirect('/resume/')
         return render(request, 'vacancy/resume-create.html', context={'form': ResumeForm})
 
     def post(self, request, *args, **kwargs):
@@ -227,7 +241,9 @@ class ResumeCreateView(CreateView):
         return render(request, 'vacancy/resume-create.html', context={'form': ResumeForm})
 
 
-class ResumeView(DetailView):
+class ResumeView(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+
     def get(self, request, *args):
         resume = Resume.objects.filter(user__id=request.user.id).first()
         if not resume:

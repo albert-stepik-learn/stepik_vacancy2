@@ -11,13 +11,14 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 @admin.register(Vacancy)
-class CompanyAdmin(admin.ModelAdmin):
+class VacancyAdmin(admin.ModelAdmin):
     list_display = ['title', 'speciality', 'skills', 'description', 'salary_min', 'salary_max', 'published_at',
                     'company']
     search_fields = ['title']
 
 
 @admin.register(Resume)
-class CompanyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'surname', 'status', 'salary', 'speciality', 'grade', 'education', 'experience', 'portfolio']
+class ResumeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'surname', 'status', 'salary', 'speciality', 'grade', 'education', 'experience',
+                    'portfolio']
     search_fields = ['name']
