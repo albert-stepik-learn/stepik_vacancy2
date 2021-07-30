@@ -51,6 +51,7 @@ class VacancyDetailView(DetailView):
 # Vacancies of a specified speciality (category):
 class SpecialityDetailView(DetailView):
     model = Speciality
+    template_name = 'vacancy/speciality.html'
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
