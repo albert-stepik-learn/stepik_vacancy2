@@ -44,7 +44,7 @@
                   <p class="text-muted pt-1">9 декабря</p>
                 </div>
                 <div class="col-12 col-md-4 col-lg-3 d-flex align-items-end">
-<!--                  <a href="#"><img src="{% static 'vacancy/'|add:vacancy.company.logo %}" width="130" height="80" alt=""></a>-->
+                  <a href="#"><img src="/media/{{ vacancy.company.logo }}" width="130" height="80" alt=""></a>
                 </div>
               </div>
               <a class="btn btn-info mb-2" href="{% url 'vacancy' vacancy.pk %}">Подробнее</a>

@@ -1,8 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
@@ -47,6 +46,7 @@ class VacancyListView(ListView):
 class VacancyDetailView(DetailView):
     model = Vacancy
     template_name = 'vacancy/vacancy.html'
+
 
 # Vacancies of a specified speciality (category):
 class SpecialityDetailView(DetailView):
@@ -93,9 +93,8 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView):
             vacancy_id = self.kwargs['vacancy_id']
             application.vacancy = get_object_or_404(Vacancy, pk=vacancy_id)
             application.save()
-            return redirect(f'/vacancies/')
+            return redirect('/vacancies/')
         return render(request, 'vacancy/application.html', context={'form': form})
-
 
 
 # Propose a new company creation:
@@ -174,7 +173,7 @@ class MyVacancyDetailView(LoginRequiredMixin, DetailView):
         form = VacancyForm(instance=vacancy)
         return render(request, 'vacancy/myvacancy.html', context={'form': form})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         vacancy = get_object_or_404(Vacancy, pk=self.kwargs['vacancy_id'])
         form = VacancyForm(request.POST, instance=vacancy)
         if form.is_valid():
@@ -189,13 +188,18 @@ class MySignupView(CreateView):
     template_name = 'vacancy/signup.html'
 
     def post(self, request, *args):
-        User.objects.create_user(
-            username=request.POST.get('username'),
-            password=request.POST.get('password1'),
-            first_name=request.POST.get('first_name'),
-            last_name=request.POST.get('last_name'),
-        )
-        return redirect('/login/')
+        form = MySignUpForm(request.POST)
+        if form.is_valid():
+            User.objects.create_user(
+                username=request.POST.get('username'),
+                password=request.POST.get('password1'),
+                first_name=request.POST.get('first_name'),
+                last_name=request.POST.get('last_name'),
+            )
+            return redirect('/login/')
+        else:
+            print(form.errors)
+            return render(request, 'vacancy/signup.html', context={'form': form})
 
 
 class MyLoginView(LoginView):

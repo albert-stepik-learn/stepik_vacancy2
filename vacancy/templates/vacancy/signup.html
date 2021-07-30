@@ -4,6 +4,7 @@
 <p>Создайте аккаунт</p>
 <form method="post" action="">{% csrf_token %}
   <table>{{ form.as_table }}</table>
+  <div>{{ form.errors }}</div>
   <button type="submit">Send</button>
 </form>
 {% endblock %}

@@ -1,5 +1,3 @@
-from importlib._common import _
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
@@ -9,8 +7,6 @@ from stepik_vacancy2.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_I
 class Speciality(models.Model):
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=200)
-    # picture = models.URLField(default='https://place-hold.it/100x60')
-    # picture = models.ImageField(upload_to=MEDIA_SPECIALITY_IMAGE_DIR, height_field='height_field', width_field='width_field')
     height_field = models.PositiveIntegerField(default=0)
     width_field = models.PositiveIntegerField(default=0)
     def __str__(self):
@@ -58,11 +54,6 @@ class Resume(models.Model):
     name = models.CharField(max_length=120)
     surname = models.CharField(max_length=120)
 
-    # class ReadyStatus(models.TextChoices):
-    #     NOTREADY = 'NR', _('Не ищу работу')
-    #     READYTOOFFER = 'RF', _('Рассматриваю предложения')
-    #     READYTOWORK = 'RW', _('Ищу работу')
-
     NOTREADY = 'NR'
     READYTOOFFER = 'RF'
     READYTOWORK = 'RW'
@@ -80,12 +71,6 @@ class Resume(models.Model):
     )
     salary = models.IntegerField()
     speciality = models.CharField(max_length=120)
-
-    # class Grade(models.TextChoices):
-    #     INTERN = 'IN', _('Стажер')
-    #     JUNIOR = 'JN', _('Младший разработчик')
-    #     MIDDLE = 'MD', _('Разработчик')
-    #     LEED = 'LD', _('Ведущий разработчик')
 
     INTERN = 'IN'
     JUNIOR = 'JN'
