@@ -63,11 +63,13 @@ class SpecialityDetailView(DetailView):
 # A list of companies:
 class CompanyListView(ListView):
     model = Company
+    template_name = 'vacancy/companies.html'
 
 
 # Company and its vacations:
 class CompanyDetailView(DetailView):
     model = Company
+    template_name = 'vacancy/company.html'
 
     def get_context_data(self, **kwargs):
         context = super(CompanyDetailView, self).get_context_data(**kwargs)
