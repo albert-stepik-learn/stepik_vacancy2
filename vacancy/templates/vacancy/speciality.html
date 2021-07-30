@@ -1,3 +1,5 @@
 {% extends "vacancy/vacancies.html" %}
+{% load ru_pluralize %}
+
 {% block h1 %} {{ speciality.code }} {% endblock %}
-{% block count %} {{ speciality.vacancies.count }} вакансий {% endblock %}
+{% block count %} {{ speciality.vacancies.count|ru_pluralize:"вакансия, вакансии, вакансий" }} {% endblock %}

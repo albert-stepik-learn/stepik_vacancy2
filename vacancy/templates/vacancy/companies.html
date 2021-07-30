@@ -1,4 +1,5 @@
 {% extends "vacancy/base.html" %}
+{% load ru_pluralize %}
 
 {% block title %}Компании | Джуманджи{% endblock %}
 
@@ -6,7 +7,7 @@
   <main class="container mt-3">
     <section>
       <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>Нам доверяют лучшие компании</strong></h1>
-      <p class="text-center pt-1">{{ object_list.count }} компаний</p>
+      <p class="text-center pt-1">{{ object_list.count|ru_pluralize:"компания, компании, компаний" }}</p>
     </section>
     <section class="my-5 pt-3">
       <h2 class="h2 font-weight-normal text-center mb-5">Нам доверяют лучшие компании</h2>
@@ -14,12 +15,12 @@
       {% for company in object_list %}
         <div class="col-6 col-md-6 col-lg-3">
           <div class="card pt-4 text-center mb-4">
-            <a href="#" style="max-width: 150px;" class="mx-auto d-block">
+            <a href="{% url 'company' company.pk %}" style="max-width: 150px;" class="mx-auto d-block">
               <img class="mx-auto d-block mw-100" src="/media/{{ company.logo }}" alt="">
             </a>
             <div class="card-body">
               <h2>{{ company.name }}</h2>
-              <p class="card-text"><a href="{% url 'company' company.pk %}">{{ company.vacancies.count }} вакансий</a></p>
+              <p class="card-text"><a href="{% url 'company' company.pk %}">{{ company.vacancies.count|ru_pluralize:"вакансия, вакансии, вакансий" }}</a></p>
             </div>
           </div>
         </div>

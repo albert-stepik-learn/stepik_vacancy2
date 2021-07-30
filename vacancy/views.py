@@ -102,8 +102,12 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView):
 
 # Propose a new company creation:
 def company_lets_start_view(request):
-    if request.user.company:
-        return redirect('/mycompany/')
+    print(request.user, request.user.id)
+    if request.user.is_authenticated:
+        if Company.objects.filter(owner_id=request.user.id):
+            return redirect('/mycompany/')
+    else:
+        return redirect('/login/')
     return render(request, 'vacancy/company-lets-start.html')
 
 
